@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Birthday Elakkiya 🎉</title>
+<style>
+/* Core Layout - Fixed to fit screen */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+html, body{
+  height:100%;
+  width:100%;
+  overflow:hidden; /* Prevents scrolling */
+  background:radial-gradient(circle at top, #0f0c29, #000);
+  color:white;
+  touch-action: pan-y; /* Improves touch handling */
+}
+body{text-align:center;display:flex;flex-direction:column;}
+
+/* Slider Container */
+.container{
+  display:flex;
+  width:100%;
+  height:100%;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* Smoother slide */
+}
+
+/* Individual Slides */
+section{
+  min-width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center; /* Centers content vertically - Fixes bottom gap */
+  align-items:center;
+  padding:20px;
+  opacity:0;
+  transform:scale(0.95);
+  transition: all 0.8s ease;
+}
+section.active{opacity:1;transform:scale(1);}
+
+/* Glass Card */
+.card{
+  background: rgba(255,255,255,0.08);
+  padding:25px 20px;
+  border-radius:20px;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 0 40px rgba(0,191,255,0.3);
+  width:90%;
+  max-width:450px; /* Prevents card from being too wide on desktop */
+  text-align:center;
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Typing Text */
+#typing{
+  font-size:28px;
+  font-weight:bold;
+  color:#00BFFF;
+  animation: bounce 1.5s ease-in-out infinite;
+  margin-bottom:10px;
+  display:block;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(6px);}
+}
+
+/* Wishes Text */
+.wish{font-size:16px;margin:8px 0;line-height:1.4;color:#eee;}
+
+/* Poem Styling */
+.poem-line{
+  font-size:16px;
+  margin:8px 0;
+  opacity:0;
+  animation:fadeIn 2s forwards;
+  color:#ddd;
+  font-style:italic;
+}
+.poem-line:nth-child(1){animation-delay:1s;}
+.poem-line:nth-child(2){animation-delay:3s;}
+.poem-line:nth-child(3){animation-delay:5s;}
+.poem-line:nth-child(4){animation-delay:7s;}
+.poem-line:nth-child(5){animation-delay:9s;}
+@keyframes fadeIn{to{opacity:1;}}
+
+/* Cake */
+.cake{font-size:100px;cursor:pointer;transition:0.3s; display:block; margin: 10px 0;}
+.cake:hover{transform:scale(1.05);}
+
+/* Popup */
+.popup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  background: rgba(0,0,0,0.95);
+  color:#00BFFF;
+  padding:30px 20px;
+  border-radius:20px;
+  transition:0.4s;
+  z-index:5000;
+  border:2px solid #00BFFF;
+  text-align:center;
+  width:80%;
+  max-width:350px;
+}
+.popup.active{transform:translate(-50%,-50%) scale(1);}
+.popup button{
+  margin-top:15px;
+  padding:8px 20px;
+  background:#00BFFF;
+  border:none;
+  border-radius:5px;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* Background Effects */
+.star{position:fixed;width:2px;height:2px;background:white;animation:twinkle 2s infinite alternate; pointer-events:none;}
+@keyframes twinkle{from{opacity:0.3;} to{opacity:1;}}
+
+.heart{position:fixed;animation:floatUp linear forwards;opacity:0.8;font-size:14px; pointer-events:none;}
+@keyframes floatUp{from{transform:translateY(0);} to{transform:translateY(-120vh);opacity:0;}}
+
+.confetti{position:fixed;width:6px;height:6px;border-radius:2px;opacity:0.9;pointer-events:none;animation:fall linear forwards;}
+@keyframes fall{0%{transform:translateY(0) rotate(0deg);} 100%{transform:translateY(120vh) rotate(360deg);}}
+
+.firework{position:fixed;width:4px;height:4px;border-radius:50%;pointer-events:none;}
+
+/* Footer */
+footer{position:fixed;bottom:5px;width:100%;padding:5px;background:black;color:#00BFFF;font-size:12px; z-index:100;}
+
+/* Next Button */
+#nextBtn{
+  padding:10px 18px;
+  font-size:14px;
+  font-weight:bold;
+  border:1px solid #00BFFF;
+  border-radius:20px;
+  background: rgba(0,191,255,0.15);
+  color:#00BFFF;
+  cursor:pointer;
+  position:fixed;
+  bottom:30px; /* Moved up slightly so it doesn't overlap footer on small screens */
+  right:20px;
+  z-index:1000;
+  transition:0.3s;
+  box-shadow: 0 0 10px rgba(0,191,255,0.3);
+}
+#nextBtn:hover{background: rgba(0,191,255,0.4);}
+
+/* Responsive Tweaks for Mobile */
+@media(max-width:500px){
+  #typing{font-size:24px;}
+  .wish,.poem-line{font-size:14px;}
+  .cake{font-size:85px;} /* Smaller cake for small phones */
+  .card{padding:20px 15px;}
+  #nextBtn{bottom:30px; right:15px; padding:8px 15px;}
+  footer{bottom:2px; font-size:10px;}
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="slider">
+  <!-- Slide 1 -->
+  <section class="active">
+    <div class="card">
+      <div id="typing"></div>
+      <p style="margin-top:10px; font-size:14px; color:#aaa;">Tonight the universe celebrates YOU 👑</p>
+    </div>
+  </section>
+
+  <!-- Slide 2 -->
+  <section>
+    <div class="card">
+      <h2 style="color:#00BFFF; margin-bottom:15px;">🎉 Wishing you the happiest birthday 🎉</h2>
+      <div class="wish">May this year surprise you with happiness, protect you from worries, and guide you toward everything you’ve been hoping for.</div>
+      <div class="wish">Your smile carries a light that can brighten entire worlds.</div>
+      <div class="wish">May every step you take lead to greatness, happiness, and endless success.</div>
+    </div>
+  </section>
+
+  <!-- Slide 3 -->
+  <section>
+    <div class="card">
+      <h2 style="color:#ff69b4; margin-bottom:15px;">🌹 Under the Same Sky 🌹</h2>
+      <div class="poem-line">Across the distance, near or far,</div>
+      <div class="poem-line">Wishing you joy like a shining star.</div>
+      <div class="poem-line">Just like the moon, I'll stay distance,</div>
+      <div class="poem-line">But always there admiring you in silence..</div>
+      <div class="poem-line">And today, the universe bows to her light. 👑</div>
+    </div>
+  </section>
+
+  <!-- Slide 4 -->
+  <section>
+    <div class="card">
+      <h2 style="color:#FFD700; margin-bottom:10px;">🎂 CAKE CUTTING 🎂</h2>
+      <div class="cake" onclick="startCountdown()">🎂</div>
+      <p>Tap the cake to celebrate 👑</p>
+    </div>
+  </section>
+</div>
+
+<button id="nextBtn">Birthday Whispers</button>
+
+<div class="popup" id="popup">
+  <h2>🎆 HAPPY BIRTHDAY Elakkiya 🎆</h2>
+  <p>You were born to shine beyond galaxies ✨</p>
+  <button onclick="closePopup()">Close</button>
+</div>
+
+<footer>Made with admiration for Elakkiya 👑</footer>
+
+<script>
+let fireworksInterval=null;
+
+/* Slider Navigation */
+let currentSlide = 0;
+const totalSlides = document.querySelectorAll("section").length;
+const navTitles = ["Home","Birthday Whispers","Quiet Admiration","Cake"];
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if(currentSlide < totalSlides-1) currentSlide++;
+  goTo(currentSlide);
+  const nextIndex = currentSlide < totalSlides-1 ? currentSlide+1 : currentSlide;
+  document.getElementById("nextBtn").innerText = navTitles[nextIndex];
+});
+
+function goTo(index){
+  document.getElementById("slider").style.transform="translateX(-"+(index*100)+"vw)";
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll("section")[index].classList.add("active");
+}
+
+/* Typing effect */
+let text="👑Happy Birthday Elakkiya👑";
+let i=0;
+(function type(){
+  if(i<text.length){
+    document.getElementById("typing").innerHTML+=text.charAt(i++);
+    let speed=i<text.length/4?20:i<text.length/2?40:80;
+    setTimeout(type,speed);
+  }
+})();
+
+/* Stars */
+for(let i=0;i<100; i++){ // Reduced count for performance
+  let star=document.createElement("div");
+  star.className="star";
+  star.style.top=Math.random()*100+"vh";
+  star.style.left=Math.random()*100+"vw";
+  star.style.animationDuration=(Math.random()*3+1)+"s";
+  document.body.appendChild(star);
+}
+
+/* Hearts */
+function createHeart(){
+  let heart=document.createElement("div");
+  heart.className="heart";
+  let hearts=["💖","💗","💓","💕"];
+  heart.innerHTML=hearts[Math.floor(Math.random()*hearts.length)];
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.bottom="-30px";
+  heart.style.fontSize=(Math.random()*14+8)+"px";
+  heart.style.animationDuration=(Math.random()*4+4)+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),8000);
+}
+setInterval(createHeart,700);
+
+/* Confetti */
+function createConfetti(){
+  for(let i=0;i<50; i++){
+    let conf=document.createElement("div");
+    conf.className="confetti";
+    conf.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    conf.style.left=Math.random()*100+"vw";
+    conf.style.width=Math.random()*5+4+"px";
+    conf.style.height=Math.random()*5+4+"px";
+    conf.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(conf);
+    setTimeout(()=>conf.remove(),4000);
+  }
+}
+
+/* Countdown & Fireworks */
+function startCountdown(){
+  let count=3;
+  let overlay=document.createElement("div");
+  overlay.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:black;display:flex;justify-content:center;align-items:center;font-size:90px;color:#00BFFF;z-index:5000;";
+  overlay.innerText=count;
+  document.body.appendChild(overlay);
+
+  let interval=setInterval(()=>{
+    count--;
+    if(count>0) overlay.innerText=count;
+    else{
+      overlay.innerText="🚀";
+      clearInterval(interval);
+      setTimeout(()=>{
+        overlay.remove();
+        createConfetti();
+        startFireworkFinale();
+        document.getElementById("popup").classList.add("active");
+      },600);
+    }
+  },1000);
+}
+
+/* Rockets & Fireworks */
+function launchRocket(){
+  let rocket=document.createElement("div");
+  rocket.style.position="fixed";
+  rocket.style.bottom="0px";
+  rocket.style.left=Math.random()*window.innerWidth+"px";
+  rocket.style.width="3px";
+  rocket.style.height="16px";
+  rocket.style.background="white";
+  rocket.style.boxShadow="0 0 6px white";
+  document.body.appendChild(rocket);
+
+  let trail=setInterval(()=>{
+    let spark=document.createElement("div");
+    spark.style.position="fixed";
+    spark.style.width="2px";
+    spark.style.height="2px";
+    spark.style.background="orange";
+    spark.style.left=rocket.style.left;
+    spark.style.top=rocket.getBoundingClientRect().top+16+"px";
+    spark.style.borderRadius="50%";
+    document.body.appendChild(spark);
+
+    spark.animate([{transform:"translateY(0)",opacity:1},{transform:"translateY(20px)",opacity:0}],{duration:500});
+    setTimeout(()=>spark.remove(),500);
+  },60);
+
+  let peak=window.innerHeight*(Math.random()*0.5+0.3);
+  rocket.animate([{transform:"translateY(0)"},{transform:`translateY(-${peak}px)`}],{duration:1000,easing:"ease-out"}).onfinish=()=>{
+    clearInterval(trail);
+    explodeRocket(rocket.getBoundingClientRect().left,rocket.getBoundingClientRect().top);
+    rocket.remove();
+  };
+}
+
+function explodeRocket(x,y){
+  for(let i=0;i<80; i++){
+    let p=document.createElement("div");
+    p.className="firework";
+    p.style.left=x+"px";
+    p.style.top=y+"px";
+    p.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    document.body.appendChild(p);
+
+    let angle=Math.random()*2*Math.PI;
+    let radius=Math.random()*150;
+
+    p.animate([{transform:"translate(0,0)",opacity:1},{transform:`translate(${Math.cos(angle)*radius}px,${Math.sin(angle)*radius}px)`,opacity:0}],{duration:1500});
+    setTimeout(()=>p.remove(),1500);
+  }
+}
+
+function startFireworkFinale(){
+  if(fireworksInterval) return;
+  let count=0;
+  fireworksInterval=setInterval(()=>{
+    for(let i=0;i<2;i++) launchRocket();
+    count++;
+    if(count>15){
+      clearInterval(fireworksInterval);
+      fireworksInterval=null;
+    }
+  },500);
+}
+
+function closePopup(){
+  document.getElementById("popup").classList.remove("active");
+  clearInterval(fireworksInterval);
+  fireworksInterval=null;
+}
+</script>
+</body>
+</html>
+
+
